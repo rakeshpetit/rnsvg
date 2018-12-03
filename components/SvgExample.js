@@ -10,7 +10,7 @@ import Svg,{
     Line,
     Rect,
     Use,
-    Text,
+    // Text,
     Image,
     Symbol,
     Defs,
@@ -28,7 +28,7 @@ const { Circle, Rect } = Svg;
 */
 
 import React from 'react';
-import { Animated, View, StyleSheet, Dimensions } from 'react-native';
+import { Text, Animated, View, StyleSheet, Dimensions } from 'react-native';
 
 // Percentages work in plain react-native but aren't supported in Expo yet, workaround with this or onLayout
 const { width, height } = Dimensions.get('window');
@@ -37,7 +37,7 @@ export default class SvgExample extends React.Component {
   animatedValue = new Animated.Value(0);
 
   componentDidMount () {
-    // this.runAnimation();
+    this.runAnimation();
   }
 
   componentDidUpdate() {
@@ -104,14 +104,14 @@ export default class SvgExample extends React.Component {
     const value = this.describeArc(100, 100, 200, 0, 90);
     console.log(value);
     return (
-      <View>
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
          <Animated.View
                 style={[
                   { transform: [{rotate: interpolatedRotateAnimation}] },
                   StyleSheet.absoluteFill,
-                  { alignItems: 'center', justifyContent: 'center' },
+                  { alignItems: 'center', justifyContent: 'center' }
                 ]}>
-          <Svg height={height * 0.5} width={width * 0.5} viewBox="-200 -100 400 400">
+          <Svg height={height * 0.5} width={width * 0.5} viewBox="-200 -90 400 400">
                 <G id="quarter_pies" >
                   <Path onPress={this.runAnimation} 
                     d="M0,0 L0,-200 A200,200 0 0,1  200,000  z" 
@@ -123,12 +123,12 @@ export default class SvgExample extends React.Component {
                     <Path d="M0,0 L200,0 A200,200 0 0,1 0,200  z" 
                     strokeWidth="1" stroke="black" fill="pink" />
                 </G>
-                <Circle cx="0" cy="0" r="150" fill="white" />
+                <Circle cx="0" cy="0" r="150" fill="yellow" />
                 </Svg>
                 </Animated.View>
-              {/* <View>
+              <View>
                     <Text style={{ fontSize: 30, alignItems: 'center', justifyContent: 'center' }}>1023</Text>
-              </View> */}
+              </View>
       </View>
       
     );
