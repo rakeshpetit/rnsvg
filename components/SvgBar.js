@@ -2,7 +2,7 @@ import Svg,{
     Circle,
     Ellipse,
     G,
-    Text,
+    // Text,
     TSpan,
     TextPath,
     Path,
@@ -28,7 +28,7 @@ const { Circle, Rect } = Svg;
 */
 
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 
 // Percentages work in plain react-native but aren't supported in Expo yet, workaround with this or onLayout
 const { width, height } = Dimensions.get('window');
@@ -37,9 +37,8 @@ export default class SvgBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          lineColor: 'red',
-          rectColor: 'yellow',
-          circleColor: 'green'
+          value: '',
+          selectedBar: -1
         };
       }  
 
@@ -51,17 +50,20 @@ export default class SvgBar extends React.Component {
         console.log(item);
         console.log(i);
         return <Rect
+            ref={i}
             key={i}
-            x={i*15+10}
-            y="25"
-            onPress = {(i) => {
-                console.log('ha ha', i.target);
-                console.log('ha ha', i.nativeEvent);
+            x={i*15}
+            y={-item*maxData}
+            onPress = {(j) => {
+                console.log('i', j);
+                console.log('ha ha', j.target);
+                console.log('ha ha', j.nativeEvent);
+                this.setState({selectedBar: i, value: item});
             }}
             rotation="0"
-            width="7"
+            width="10"
             height={item*maxData}
-            fill="yellow"
+            fill={this.state.selectedBar === i ? 'red' : 'yellow'}
             stroke="green"
         />
     });
@@ -75,7 +77,8 @@ export default class SvgBar extends React.Component {
           StyleSheet.absoluteFill,
           { alignItems: 'center', justifyContent: 'center' },
         ]}>
-        <Svg height={height * 0.5} width={width * 0.5} viewBox="0 0 300 300">
+        <Text style={{fontSize: 20}}>{this.state.value}</Text>
+        <Svg height={height * 0.5} width={width * 0.7} viewBox="-100 -70 500 300">
         <G id="quarter_pies" >
         {this.renderBars()}
         </G>
